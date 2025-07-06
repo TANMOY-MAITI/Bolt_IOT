@@ -1,0 +1,48 @@
+Thiss code imports some necessary Python modules and packages for building a web application that uses OpenAI's API:
+1. from boltiotai import openai imports the OpenAI module from the boltiotai library, which provides an interface for interacting with OpenAI's language models and other AI services.
+2. import os imports the os module, which provides a way to interact with the operating system and environment variables.
+3. from flask import Flask, render_template_string, request imports three classes from the Flask module:
+
+Flask : This is the main class for creating a Flask application.
+render_template_string : This is a function for rendering a template (a HTML file with placeholders) as a string,
+                          which can be used as a response to a client request.
+request : This is a global variable that represents the request object for the current HTTP request.
+
+from boltiotai import openai
+import os
+from flask import Flask, render_template_string, request
+
+This code sets the api_key attribute of the openai module to the value of an environment variable called OPENAI_API_KEY . 
+The os module provides a way to access environment variables in Python. The api_key is used to authenticate requests to the OpenAI API, 
+which is a service that provides access to machine learning models for natural language processing (NLP) and other tasks. 
+By setting the api_key, this code allows the Python program to use the OpenAI API to perform NLP tasks.
+
+openai.api_key = os.environ['OPENAI_API_KEY']
+
+This code defines a Python function named generate_tutorial that takes one argument components. Here's what the code does:
+1. The function calls the OpenAI API to create a chatbot response using the GPT-3.5-turbo model .
+2. The API call includes two messages, one from the "system " role and one from the "user " role.
+3. The "system " message is a greeting that sets the tone for the chatbot's response.
+4. The "user " message is a prompt that asks the chatbot to suggest a recipe using a list of ingredients provided as components.
+5. The chatbot's response includes a recipe with a creative name, step-by-step instructions, and a fun fact about the recipe or one of its ingredients.
+6. The function returns the chatbot's response as a string, extracted from the response object returned by the API call.
+7. To use this function, you would need to have an API key created on trainings.
+    boltiot.com and import the openai module from boltiotai library in your Python script.
+    You would also need to provide a valid components argument when calling the generate_tutorial function.
+
+def generate_tutorial(components):    
+ response = openai.chat.completions.create(        
+  model="gpt-3.5-turbo",        
+  messages=[{        
+   "role": "system",        
+   "content": "You are a helpful assistant"        
+  }, {        
+   "role":       
+   "user",       
+   "content":       
+   f"Suggest a recipe using the items listed as available. Make sure you have a nice name for this recipe listed at the start.
+Also, include a funny version of the name of the recipe on the following line. Then share the recipe in a step-by-step manner. 
+In the end, write a fun fact about the recipe or any of the items used in the recipe.
+Here are the items available: {components}, Haldi, Chilly Powder, Tomato Ketchup, Water, Garam Masala, Oil"           
+  }])        
+ return response['choices'][0]['message']['content']
