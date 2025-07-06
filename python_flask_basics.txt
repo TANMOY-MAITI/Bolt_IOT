@@ -1,0 +1,75 @@
+The first line imports the Flask module and creates an instance of the Flask class, 
+which represents the web application. The name of the application is passed as a parameter.
+
+
+app = Flask(__name__)
+
+
+The next line defines a route for the application, 
+which is the URL that the user will access to interact with the application. 
+In this case, the route is set to "/", which is the root URL. 
+The methods parameter specifies that the route can handle both GET and POST requests. 
+
+
+@app.route('/', methods=['GET', 'POST'])
+
+
+The hello() function is the view function for this route. When the user accesses the root URL,
+the view function will be called. In this case, the hello() function is simply initializing an empty string output. 
+If the request method is POST, meaning that the user has submitted a form with data, 
+the function retrieves the value of the 'components' field from the form using request.
+form['components'] and calls a function named generate_tutorial() with that value.
+
+
+def hello():
+    output = ""
+    if request.method == 'POST':
+        components = request.form['components']
+        output = generate_tutorial(components)
+
+
+The next route is defined for the application. 
+The route is set to '/generate' and can only handle POST requests. 
+
+
+@app.route('/generate', methods=['POST'])
+
+
+The generate() function is the view function for the /generate route. 
+When the user submits the form on this route, 
+the function retrieves the value of the 'components' field from the form using request.
+form['components'] and calls the generate_tutorial() function with that value. 
+The generate() function then returns the output of generate_tutorial().
+
+
+def generate():
+    components = request.form['components']
+    return generate_tutorial(components)
+            
+        
+
+Finally, the code checks if the application is being run directly by checking if the _name variable is set to '__main_'. 
+If it is, the app.run() function is called to start the Flask development server. 
+The server will listen on all available network interfaces ('0.0.0.0') and port 8080.
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)
+
+
+The Final Code Snippet:
+
+
+app = Flask(_name_)
+@app.route('/', methods=['GET', 'POST'])
+def hello():
+    output = ""
+    if request.method == 'POST':
+        components = request.form['components']
+        output = generate_tutorial(components)
+@app.route('/generate', methods=['POST'])
+def generate():
+    components = request.form['components']
+    return generate_tutorial(components)
+if _name_ == '_main_':
+    app.run(host='0.0.0.0', port=8080)
